@@ -82,6 +82,7 @@
                 <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item></div>
             </el-form>
+            
             <el-divider></el-divider>
  <el-table
     :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
