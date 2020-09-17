@@ -7,6 +7,7 @@
         <router-link to="/login">login</router-link> |
         <router-link to="/admin/login">AdminLogin</router-link> |
         <router-link to="/user">userpage</router-link> |
+        <router-link to="/user/sel">SelectPage</router-link> |
         <router-link to="/admin">adminpage</router-link> |
         <router-link to="/admin/console">adminConsole</router-link>
       </div>

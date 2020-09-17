@@ -43,6 +43,11 @@ const routes = [
     path: "/admin/console",
     name: "adminConsole",
     component: () => import("../views/console.vue")
+  },
+  {
+    path: "/user/sel",
+    name: "SelPage",
+    component: () => import("../views/sel.vue")
   }
 ];
 
