@@ -19,7 +19,7 @@
                 <el-radio-button label="篮球"></el-radio-button>
                 <el-radio-button label="排球"></el-radio-button>
                 <el-radio-button label="羽毛球"></el-radio-button>
-                <el-radio-button label="太极拳" disabled></el-radio-button>
+                <el-radio-button label="太极拳"></el-radio-button>
                 <el-radio-button label="田径"></el-radio-button>
                 <el-radio-button label="跳绳"></el-radio-button>
                 <el-radio-button label="铅球"></el-radio-button>
