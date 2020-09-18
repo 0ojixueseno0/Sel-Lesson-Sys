@@ -1,20 +1,42 @@
 <template>
   <el-row class="selpage is-justify-center is-align-middle el-row--flex">
-    <el-col style="height: calc(100% - 121px);max-width:800px">
-      <div
-        style="
-    text-align: left;"
-      >
-        <div style="line-height:0px; float:left">
-              <el-page-header
-                style="font-size: 40px;display:inline-block"
-                @back="goBack"
-              />
-              <p style="font-size: 30px;display:inline-block">🎈选择课程</p>
-            </div>
-        <el-card class="sel-card" style="width:100%; height: 100%">
-          <div align=center>
-            <el-radio-group v-model="radio1" class="seldiv">
+    <el-col style="height: calc(100% - 121px); max-width: 800px">
+      <div style="text-align: left">
+        <div style="line-height: 0px; float: left">
+          <el-page-header
+            style="font-size: 40px; display: inline-block"
+            @back="goBack"
+          />
+          <p style="font-size: 30px; display: inline-block">🎈选择课程</p>
+        </div>
+        <el-card class="sel-card" style="width: 100%; height: 100%">
+          <el-form :inline="true" :model="formInline">
+            <!-- <el-form-item label="课程">
+              <el-input
+                v-model="formInline.user"
+                placeholder="审批人"
+              ></el-input>
+            </el-form-item> -->
+            <el-form-item label="课程">
+              <el-select v-model="formInline.region" placeholder="活动区域">
+                <el-option label="区域一" value="shanghai"></el-option>
+                <el-option label="区域二" value="beijing"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <div align="center">
+                <el-button
+                  type="success"
+                  icon="el-icon-check"
+                  round
+                  @click="open"
+                  >提交</el-button
+                >
+              </div>
+            </el-form-item>
+          </el-form>
+          <div align="center">
+            <!-- <el-radio-group v-model="radio1" class="seldiv">
               <div v-if="mode == 1">
                 <el-radio-button label="篮球一班"></el-radio-button>
                 <el-radio-button label="篮球二班"></el-radio-button>
@@ -66,12 +88,8 @@
                 <el-radio-button label="武术"></el-radio-button>
                 <el-radio-button label="花样跳绳"></el-radio-button>
               </div>
-            </el-radio-group>
-            <div style="min-height:100px">
-            </div>
-          </div>
-          <div align="center">
-                <el-button type="success" icon="el-icon-check" round @click="open">提交</el-button>
+            </el-radio-group>-->
+            <div style="min-height: 100px"></div>
           </div>
         </el-card>
       </div>
@@ -83,30 +101,48 @@
 export default {
   data() {
     return {
-        radio1: '',
-        mode: 3
+      formInline: {
+        user: "",
+        region: "",
+      },
+      radio1: "",
+      mode: 3,
     };
+  },
+  mounted() {
+    if (this.$store.state.userinfo[0].name == "") {
+      this.$router.push("/");
+      this.$message({
+        showClose: true,
+        message: "请登陆后继续",
+        type: "error",
+      });
+    }
   },
   methods: {
     goBack() {
       this.$router.go(-1);
     },
     commit() {
-        console.log("success" + this.radio1)
-         this.$router.go(-1)
+      console.log("success" + this.radio1);
+      this.$router.go(-1);
     },
     open() {
-        this.$alert('你选择了 ' + this.radio1 + '，是否确认选择此科目', '确认选择', {
-          confirmButtonText: '确定',
-          callback: action => {
+      this.$alert(
+        "你选择了 " + this.radio1 + "，是否确认选择此科目",
+        "确认选择",
+        {
+          confirmButtonText: "确定",
+          callback: (action) => {
             this.$message({
-              type: 'info',
-              message: `action: ${ action }`
+              type: "info",
+              message: `action: ${action}`,
             });
-          }
-        });
-      }
-  }
+          },
+        }
+      );
+    },
+  },
 };
 </script>
 <style>
@@ -139,14 +175,14 @@ export default {
         max-width: 60%;
     }
 } */
-@media (max-width: 730px){
-  .seldiv{
+@media (max-width: 730px) {
+  .seldiv {
     width: 100%;
   }
 }
-@media (min-width: 730px){
-  .seldiv{
-     width: 60%;
+@media (min-width: 730px) {
+  .seldiv {
+    width: 60%;
   }
 }
 </style>

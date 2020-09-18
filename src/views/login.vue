@@ -2,7 +2,7 @@
   <div id="login" class="el-row is-justify-center is-align-middle el-row--flex">
     <div class="el-col el-col-24 el-col-xs-22 el-col-sm-8 el-col-md-6">
       <div class="el-card box-card is-always-shadow">
-        <div class="el-card__header" @click="ToAdmin">
+        <div class="el-card__header">
           <el-avatar :size="100">
             <img src="../assets/logoo.png" />
           </el-avatar>
@@ -15,25 +15,13 @@
         <div class="el-card__body">
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
             <el-form-item prop="username">
-              <el-input
-                type="text"
-                placeholder="姓名"
-                v-model="ruleForm.username"
-                autocomplete="off"
-              ></el-input>
+              <el-input type="text" placeholder="姓名" v-model="ruleForm.username" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item prop="num">
-              <el-input
-                type="text"
-                placeholder="学号"
-                v-model="ruleForm.num"
-                autocomplete="off"
-              ></el-input>
+              <el-input type="text" placeholder="学号" v-model="ruleForm.num" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')"
-                >登录</el-button
-              >
+              <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
               <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
               <!-- <el-button @click="showForm('ruleForm')">显示</el-button> -->
             </el-form-item>
@@ -44,8 +32,6 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-
 export default {
   metaInfo: {
     title: "在线选课系统",
@@ -154,7 +140,7 @@ export default {
           type: "error"
         });
       }, 10000);
-      axios
+      this.axios
         .post("url", loginForm) //need to change url
         .then(resp => {
           if (resp.status === 200) {
