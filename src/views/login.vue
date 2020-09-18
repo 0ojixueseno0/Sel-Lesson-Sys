@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     ToAdmin() {
-      this.router.push("/admin/login");
+      this.$router.push("/admin/login");
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {

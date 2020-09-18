@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     ToLogin() {
-      this.router.push("/login");
+      this.$router.push("/login");
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {

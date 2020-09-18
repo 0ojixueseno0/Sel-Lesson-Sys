@@ -21,7 +21,7 @@
     </el-main>
     <el-footer
       >🚀Powered by G19305 <b>季学森、陈芃州、吴优</b><br />
-      📌指导教师：<b>徐健、王春荣</b> 📱其他：<b>梁天</b><br />
+      📌指导教师：<b>徐健、王春荣</b> 📱其他：<b>梁天、李麒龙</b><br />
       友链：<a href="https://yzgz.ac.cn">扬州高职校论坛</a></el-footer
     >
   </el-container>
