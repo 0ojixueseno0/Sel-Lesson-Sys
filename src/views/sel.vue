@@ -96,6 +96,15 @@ export default {
          this.$router.go(-1)
     },
     open() {
+      if (this.radio1 == '')
+      {
+        this.$message({
+          type: 'warning',
+          message: "请选择科目"
+        });
+      }
+      else
+      {
         this.$alert('你选择了 ' + this.radio1 + '，是否确认选择此科目', '确认选择', {
           confirmButtonText: '确定',
           callback: action => {
@@ -105,6 +114,7 @@ export default {
             });
           }
         });
+      }
       }
   }
 };
