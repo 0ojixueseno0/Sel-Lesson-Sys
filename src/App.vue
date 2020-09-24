@@ -1,16 +1,15 @@
 <template>
   <el-container id="app">
     <el-header>
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/login">login</router-link> |
-        <router-link to="/admin/login">AdminLogin</router-link> |
-        <router-link to="/user">userpage</router-link> |
-        <router-link to="/user/sel">SelectPage</router-link> |
-        <router-link to="/admin">adminpage</router-link> |
+      <!-- <div id="nav">
+        <router-link to="/">login</router-link>|
+        <router-link to="/login">login</router-link>|
+        <router-link to="/admin/login">AdminLogin</router-link>|
+        <router-link to="/user">userpage</router-link>|
+        <router-link to="/user/sel">SelectPage</router-link>|
+        <router-link to="/admin">adminpage</router-link>|
         <router-link to="/admin/console">adminConsole</router-link>
-      </div>
+      </div> -->
     </el-header>
     <el-main>
       <el-scrollbar wrap-class="list" view-class="view-box" :native="false">
@@ -19,11 +18,14 @@
         </transition>
       </el-scrollbar>
     </el-main>
-    <el-footer
-      >🚀Powered by G19305 <b>季学森、陈芃州、吴优</b><br />
-      📌指导教师：<b>徐健、王春荣</b> 📱其他：<b>梁天、李麒龙</b><br />
-      友链：<a href="https://yzgz.ac.cn">扬州高职校论坛</a></el-footer
-    >
+    <el-footer>
+      🚀Powered by G19305
+      <b>季学森、陈芃州、吴优</b>
+      <br />📌指导教师： <b>徐健、王春荣</b> 📱其他：
+      <b>梁天、李麒龙</b>
+      <br />友链：
+      <a href="https://yzgz.ac.cn">扬州高职校论坛</a>
+    </el-footer>
   </el-container>
 </template>
 
@@ -74,7 +76,7 @@ export default {
   }
 }
 
-.page{
+.page {
   max-height: calc(100vh - 200px);
 }
 
