@@ -1,15 +1,15 @@
 <template>
   <el-container id="app">
     <el-header>
-      <div id="nav">
+      <!-- <div id="nav">
         <router-link to="/">login</router-link>|
-        <!-- <router-link to="/login">login</router-link>| -->
-        <!-- <router-link to="/admin/login">AdminLogin</router-link>| -->
+        <router-link to="/login">login</router-link>|
+        <router-link to="/admin/login">AdminLogin</router-link>|
         <router-link to="/user">userpage</router-link>|
         <router-link to="/user/sel">SelectPage</router-link>|
-        <!-- <router-link to="/admin">adminpage</router-link>|
-        <router-link to="/admin/console">adminConsole</router-link> -->
-      </div>
+        <router-link to="/admin">adminpage</router-link>|
+        <router-link to="/admin/console">adminConsole</router-link>
+      </div> -->
     </el-header>
     <el-main>
       <el-scrollbar wrap-class="list" view-class="view-box" :native="false">
@@ -34,22 +34,22 @@ export default {
   name: "App",
   provide() {
     return {
-      reload: this.reload,
+      reload: this.reload
     };
   },
   data() {
     return {
-      isRouterAlive: true,
+      isRouterAlive: true
     };
   },
   methods: {
     reload() {
       this.isRouterAlive = false;
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         this.isRouterAlive = true;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
