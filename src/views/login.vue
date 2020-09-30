@@ -13,7 +13,13 @@
           <span style="font-size: 24px">扬州高职校选课系统</span>
         </div>
         <div class="el-card__body">
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm">
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            @submit.native.prevent
+          >
             <el-form-item prop="username">
               <el-input
                 type="text"
@@ -31,7 +37,10 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')"
+              <el-button
+                type="primary"
+                native-type="submit"
+                @click="submitForm('ruleForm')"
                 >登录</el-button
               >
               <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
@@ -108,35 +117,6 @@ export default {
         }
       });
     },
-    // resetForm(formName) {
-    //   this.$refs[formName].resetFields();
-    // },
-    // showForm(formName) {
-    //   this.$refs[formName].validate(valid => {
-    //     if (valid) {
-    //       this.$notify({
-    //         title: "显示",
-    //         type: "success",
-    //         dangerouslyUseHTMLString: true,
-    //         message:
-    //           "姓名:" +
-    //           this.ruleForm.username +
-    //           "<br>学号:" +
-    //           this.ruleForm.num,
-    //         duration: 5000
-    //       });
-    //       console.log(this.ruleForm);
-    //     } else {
-    //       this.$notify({
-    //         title: "显示",
-    //         type: "error",
-    //         message: "请正确输入用户名和密码",
-    //         duration: 5000
-    //       });
-    //       return false;
-    //     }
-    //   });
-    // },
     login() {
       const loading = this.$loading({
         lock: true,
@@ -155,10 +135,11 @@ export default {
         }
       }, 10000);
       this.axios
-        .get("http://127.0.0.1:3000/api/v1/user/id", {
+        .get(this.$store.state.apiUrl + "/api/v1/user/id", {
           params: { id: this.ruleForm["num"] }
         }) //need to change url
         .then(resp => {
+          // console.log(resp.data);
           if (resp.data.status === 200) {
             if (resp.data.data.name == this.ruleForm["username"]) {
               this.$store.state.userinfo = [
@@ -169,7 +150,7 @@ export default {
                 { id: "班级", name: resp.data.data.class },
                 { id: "选课", name: "" }
               ];
-              let grade = resp.data.data.class.slice(1, 3);
+              let grade = resp.data.data.id.toString().slice(0, 2);
               this.$store.state.grade = grade;
 
               if (resp.data.data.top == "") {
@@ -193,10 +174,14 @@ export default {
                   case "05":
                     classType = "跳绳";
                     break;
+                  case "06":
+                    classType = "羽毛球";
+                    break;
                 }
                 this.$store.state.userinfo[5].name =
                   classType + classNum + "班";
               }
+              this.getTop();
               loading.close();
               this.isLoading = false;
               this.$router.push("/user");
@@ -228,6 +213,84 @@ export default {
           });
           loading.close();
           this.isLoading = false;
+        });
+    },
+    getTop() {
+      this.axios
+        .get(this.$store.state.apiUrl + "/api/v1/top/all")
+        .then(resp => {
+          // console.log(resp.data);
+          if (resp.data.status === 200) {
+            var grade = "";
+            var student = "";
+            if (this.$store.state.userinfo[3].name == "信息工程系") {
+              if (
+                this.$store.state.grade == "19" ||
+                this.$store.state.grade == "18"
+              ) {
+                grade = "1819";
+              } else if (
+                this.$store.state.grade == "17" ||
+                this.$store.state.grade == "16"
+              ) {
+                grade = "1617";
+              }
+              student = "Xx";
+            } else if (this.$store.state.userinfo[3].name == "电子工程系") {
+              if (
+                this.$store.state.grade == "19" ||
+                this.$store.state.grade == "18"
+              ) {
+                grade = "1819";
+              } else if (
+                this.$store.state.grade == "17" ||
+                this.$store.state.grade == "16"
+              ) {
+                grade = "1617";
+              }
+              student = "Dz";
+            }
+            var i = 0;
+            var classes = new Array();
+            Object.keys(resp.data.data).forEach(function(k) {
+              if (k.slice(2, 6) == grade && k.slice(0, 2) == student) {
+                let classType = k.slice(6, 8);
+                let classNum = parseInt(k.slice(8));
+                switch (classType) {
+                  case "01":
+                    classType = "篮球";
+                    break;
+                  case "02":
+                    classType = "排球";
+                    break;
+                  case "03":
+                    classType = "足球";
+                    break;
+                  case "04":
+                    classType = "武术";
+                    break;
+                  case "05":
+                    classType = "跳绳";
+                    break;
+                  case "06":
+                    classType = "羽毛球";
+                    break;
+                }
+                classes[i] = {
+                  class: classType + classNum + "班",
+                  key: k
+                };
+                i++;
+              }
+            });
+            this.$store.state.classes = classes;
+          } else {
+            this.$message({
+              showClose: true,
+              message: "未知错误，请联系管理员",
+              type: "error"
+            });
+          }
         });
     }
   }
