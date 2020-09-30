@@ -29,62 +29,12 @@
             >
               <el-form-item label="课程">
                 <el-select v-model="formInline.class" placeholder="请选择">
-                  <div
-                    v-if="
-                      this.$store.state.userinfo[3].name == '信息工程系' &&
-                        (this.$store.state.grade == '19' ||
-                          this.$store.state.grade == '18')
-                    "
-                  >
-                    <el-option
-                      v-for="item in this.$store.state.classes.Xx.Y1819"
-                      :key="item.key"
-                      :label="item.class"
-                      :value="item.key"
-                    ></el-option>
-                  </div>
-                  <div
-                    v-if="
-                      this.$store.state.userinfo[3].name == '信息工程系' &&
-                        (this.$store.state.grade == '17' ||
-                          this.$store.state.grade == '16')
-                    "
-                  >
-                    <el-option
-                      v-for="item in this.$store.state.classes.Xx.Y1617"
-                      :key="item.key"
-                      :label="item.class"
-                      :value="item.key"
-                    ></el-option>
-                  </div>
-                  <div
-                    v-if="
-                      this.$store.state.userinfo[3].name == '电子工程系' &&
-                        (this.$store.state.grade == '19' ||
-                          this.$store.state.grade == '18')
-                    "
-                  >
-                    <el-option
-                      v-for="item in this.$store.state.classes.Dz.Y1819"
-                      :key="item.key"
-                      :label="item.class"
-                      :value="item.key"
-                    ></el-option>
-                  </div>
-                  <div
-                    v-if="
-                      this.$store.state.userinfo[3].name == '电子工程系' &&
-                        (this.$store.state.grade == '17' ||
-                          this.$store.state.grade == '16')
-                    "
-                  >
-                    <el-option
-                      v-for="item in this.$store.state.classes.Dz.Y1617"
-                      :key="item.key"
-                      :label="item.class"
-                      :value="item.key"
-                    ></el-option>
-                  </div>
+                  <el-option
+                    v-for="item in this.$store.state.classes"
+                    :key="item.key"
+                    :label="item.class"
+                    :value="item.key"
+                  ></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item>
@@ -160,7 +110,7 @@ export default {
       this.$alert("选择此科目后将无法更改，是否确认？", "确认选择", {
         confirmButtonText: "确定",
         callback: action => {
-          console.log(action);
+          // console.log(action);
           const loading = this.$loading({
             lock: true,
             text: "正在提交.."
@@ -178,7 +128,7 @@ export default {
             }
           }, 10000);
           this.axios
-            .get("http://127.0.0.1:3000/api/v1/apptop", {
+            .get(this.$store.state.apiUrl + "/api/v1/apptop", {
               params: {
                 id: this.$store.state.userinfo[1].name,
                 top: this.formInline.class
@@ -204,12 +154,23 @@ export default {
                   case "05":
                     classType = "跳绳";
                     break;
+                  case "06":
+                    classType = "羽毛球";
+                    break;
                 }
                 this.$store.state.userinfo[5].name =
                   classType + classNum + "班";
                 this.$message({
                   showClose: true,
                   message: "成功"
+                });
+                loading.close();
+                this.isLoading = false;
+              } else if (resp.data.status === 1010) {
+                this.$message({
+                  showClose: true,
+                  message: "该课程已满，请重新登陆后再试",
+                  type: "error"
                 });
                 loading.close();
                 this.isLoading = false;
